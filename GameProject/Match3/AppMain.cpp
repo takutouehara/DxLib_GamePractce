@@ -54,7 +54,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	//シーンマネージャー初期化処理
 	//エラーが発生したら、終了する
-	if (SceneManager_INitialize(E_TITLE) == D_ERROR)
+	if (SceneManager_Initialize(E_TITLE) == D_ERROR)
 	{
 		return D_ERROR;
 	}
@@ -69,7 +69,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	while (ProcessMessage() != D_ERROR && Input_Escape() == FALSE)
 	{
 		//入力制限機能更新処理
-		Input_Updete();
+		Input_Update();
 
 		//シーンマネージャー更新処理
 		SceneManager_Update();
@@ -84,7 +84,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		FreamControl_Update();
 
 		//画面の内容を表画面に反映
-		ScreenFlip;
+		ScreenFlip();
 	}
 
 	//Dxライブラリ処理の終了処理

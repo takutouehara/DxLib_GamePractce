@@ -17,7 +17,7 @@
 *変数宣言
 *******************************/
 int GameScore;
-int FameLevel;
+int GameLevel;
 int GameMission;
 int GameTime;
 int GameCount;	//初期化されないようにするためのカウント
@@ -93,8 +93,8 @@ void GameMainScene_Update(void)
 		break;				
 		case 4:				
 		CheckClear();		//クリアチェック
-		break:				
-		default;			
+		break;
+		default:			
 		break;				
 	}
 

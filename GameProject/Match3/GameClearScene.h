@@ -11,6 +11,6 @@
 /*******************************
 *プロトタイプ宣言
 *******************************/
-int GmaeClearScene_Initialize(void);
+int GameClearScene_Initialize(void);
 void GameClearScene_Update(void);
-void GmaeClearScene_Draw(void);
+void GameClearScene_Draw(void);
