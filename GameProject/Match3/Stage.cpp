@@ -281,9 +281,9 @@ void SelectBlock(void)
 		{
 			Select[NEXT_CURSOR].x = Select[SELECT_CURSOR].x;
 			Select[NEXT_CURSOR].y = Select[SELECT_CURSOR].y;
-			ClickStatus = E_NONE;
+			ClickStatus = E_ONCE;
 		}
-		else if (ClickStatus == E_ONCE && ((abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x) == 1 && (abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y) == 0)) || (abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x) == 0 && abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y) == 1)))
+		else if (ClickStatus == E_ONCE && ((abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x) == 1 && (abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y) == 0)) || (abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x) == 0 && (abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y) == 1))))
 		{
 			Select[TMP_CURSOR].x = Select[SELECT_CURSOR].x;
 			Select[TMP_CURSOR].y = Select[SELECT_CURSOR].y;
@@ -512,7 +512,7 @@ void Set_StageMission(int mission)
 * 引数２：ブロックXマス
 * 戻り値：連鎖有無（０：なし　１：あり）
 *******************************/
-int combo_Check(int y, int x)
+int combo_check(int y, int x)
 {
 	int ret = FALSE;
 
