@@ -54,7 +54,7 @@ int GameMainScene_Initialize(void)
 			break;
 		}
 	}
-	
+
 	//ゲームプレイが初回かどうか？
 	if (GameCount == 0)
 	{
