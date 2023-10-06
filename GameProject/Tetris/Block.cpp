@@ -394,3 +394,182 @@ void move_block(void)
 	引数：なし
 	戻り値：なし
 **********************************/
+void change_block(void)
+{
+	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = { E_BLOCK_EMPTY };	//退避領域
+	
+	int i, j;	//ループカウンタ
+
+	//ストック先が空かどうか確認
+	if (Stock_Flg == TRUE)
+	{
+		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+		{
+			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+			{
+				temp[i][j] = DropBlock[i][j];
+				DropBlock[i][j] = Stock[i][j];
+				Stock[i][j] = temp[i][j];
+			}
+		}
+	}
+	else
+	{
+		Stock_Flg = TRUE;
+		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+		{
+			for (j = 0; j < BLOCK_TROUT_SIZE; i++)
+			{
+				Stock[i][j] = DropBlock[i][j];
+			}
+		}
+		//新しいブロックの設定と次のブロックの生成
+		create_block();
+	}
+}
+
+/**************************************************
+	ブロック機能：ブロックの交換処理
+	引数：回転指せる向き(0:時計回り 1:反時計回り)
+	戻り値：なし
+**************************************************/
+void turn_block(int clockwise)
+{
+	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = { E_BLOCK_EMPTY };	//退避領域
+
+	int i, j;	//ループカウンタ
+
+	do
+	{
+		if (clockwise == TURN_CROCKWICE)
+		{
+			//ブロックを一時保持する
+			for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+			{
+				for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+				{
+					temp[j][3 - i] = DropBlock[i][j];
+				}
+			}
+		}
+		else
+		{
+			//ブロックを一時保持する
+			for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+			{
+				for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+				{
+					temp[3 - j][i] = DropBlock[i][j];
+				}
+			}
+		}
+
+		//ブロック回転
+		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+		{
+			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+			{
+				DropBlock[i][j] = temp[i][j];
+			}
+		}
+
+		//壁側の補正処理
+		if (check_overlap(DropBlock_X, DropBlock_Y) && DropBlock_X >= E_BLOCK_WALL)
+		{
+			DropBlock_X--;
+		}
+		if (check_overlap(DropBlock_X, DropBlock_Y) && DropBlock_X <= E_BLOCK_EMPTY)
+		{
+			DropBlock_X++;
+		}
+	} while (check_overlap(DropBlock_X, DropBlock_Y) == FALSE);
+
+	PlaySoundMem(SoundEffect[2], DX_PLAYTYPE_BACK, TRUE);
+}
+
+/****************************************
+	ブロック機能：範囲外チェック処理
+	引数：落下ブロックの座標(ｘ、ｙ)
+	戻り値：TRUE(範囲内),FALSE(範囲外)
+****************************************/
+int check_overlap(int x, int y)
+{
+	int i, j;	//ループカウンタ
+
+	for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+	{
+		for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+		{
+			if (DropBlock[i][j] != E_BLOCK_EMPTY)
+			{
+				if (Field[i + y][j + x] != E_BLOCK_EMPTY)
+				{
+					return FALSE;
+				}
+			}
+		}
+	}
+
+	return TRUE;
+}
+
+/*******************************************************
+	ブロック機能：着地したブロックを固定済みにする処理
+	引数：落下ブロックの座標(x,y)
+	戻り値：なし
+*******************************************************/
+void lock_block(int x, int y)
+{
+	int i, j;	//ループカウンタ
+
+	for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+	{
+		for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+		{
+			if (DropBlock[i][j] != E_BLOCK_EMPTY)
+			{
+				Field[y + i][x + j] = DropBlock[i][j];
+			}
+		}
+	}
+	PlaySoundMem(SoundEffect[1], DX_PLAYTYPE_BACK, TRUE);
+}
+
+/********************************************
+	ブロック機能：ブロックの横一列確認処理
+	引数：なし
+	戻り値：なし
+********************************************/
+void check_line(void)
+{
+	int i, j, k;	//ループカウンタ
+
+	for (i = 0; i < FIELD_HEIGHT - 1; i++)
+	{
+		for (j = 1; j < FIELD_WIDTH; j++)
+		{
+			//行の途中が空いているか？
+			if (Field[i][j] == E_BLOCK_EMPTY)
+			{
+				break;
+			}
+		}
+
+		//一列揃っていたら、カウントを増やし、一段下げる
+		if (j >= FIELD_WIDTH)
+		{
+			//カウントを増加
+			DeleteLine++;
+
+			//一段下げる
+			for (k = i; k > 0; k--);
+			{
+				for (j = 1; j < FIELD_WIDTH; j++)
+				{
+					Field[k][j] = Field[k - 1][j];
+				}
+			}
+			PlaySoundMem(SoundEffect[0], DX_PLAYTYPE_BACK, TRUE);
+		}
+	}
+}
