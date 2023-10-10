@@ -101,7 +101,7 @@ int WaitTime;		//待機時間
 int Stock_Flg;		//ストックフラッグ
 int Generate_Flg;	//生成フラグ
 int DeleteLine;		//消したラインの数
-int SoundEffect;	//SE
+int SoundEffect[3];	//SE
 
 /********************************
 	プロトタイプ宣言
@@ -183,7 +183,7 @@ void Block_Update(void)
 		//生成可能であれば
 		if (Generate_Flg == TRUE)
 		{
-			chage_Block();	//ストック交換処理
+			change_block();	//ストック交換処理
 							//ブロックの回転を正位置にする
 		}
 	}
