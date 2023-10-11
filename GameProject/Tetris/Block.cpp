@@ -418,7 +418,7 @@ void change_block(void)
 		Stock_Flg = TRUE;
 		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 		{
-			for (j = 0; j < BLOCK_TROUT_SIZE; i++)
+			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 			{
 				Stock[i][j] = DropBlock[i][j];
 			}
@@ -562,7 +562,7 @@ void check_line(void)
 			DeleteLine++;
 
 			//ˆê’i‰º‚°‚é
-			for (k = i; k > 0; k--);
+			for (k = i; k > 0; k--)
 			{
 				for (j = 1; j < FIELD_WIDTH; j++)
 				{

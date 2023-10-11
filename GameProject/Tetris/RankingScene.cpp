@@ -149,7 +149,7 @@ void file_read(void)
 	OutputDebugString("ファイルを読み込みます");
 	fopen_s(&fp, RANKING_FILE, "r");
 
-	if (fp = NULL)
+	if (fp == NULL)
 	{
 		OutputDebugString("ファイルが読み込めません");
 		OutputDebugString("ファイルを生成します");
@@ -159,7 +159,7 @@ void file_read(void)
 	{
 		for (i = 0; i < RANKING_MAX; i++)
 		{
-			fscanf_s(fp, "%2d,%[^,],%10d/n", &Ranking_Data[i].rank, Ranking_Data[i].name, RANKING_NAME_LEN, &Ranking_Data[i].score);
+			fscanf_s(fp, "%2d,%[^,],%10d\n", &Ranking_Data[i].rank, Ranking_Data[i].name, RANKING_NAME_LEN, &Ranking_Data[i].score);
 		}
 
 		fclose(fp);
@@ -187,7 +187,7 @@ void file_write(void)
 	{
 		for (i = 0; i < RANKING_MAX; i++)
 		{
-			fprintf(fp, "%2d,%[^,],%10d/n", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
+			fprintf(fp, "%2d,%[^,],%10d\n", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
 		}
 
 		fclose(fp);
@@ -210,7 +210,7 @@ void ranking_sort(void)
 	//データをソートを行う
 	for (i = 0; i < RANKING_MAX; i++)
 	{
-		for (j = 0; j < RANKING_MAX; j++)
+		for (j = i + 1; j < RANKING_MAX; j++)
 		{
 			if (Ranking_Data[i].score < Ranking_Data[j].score)
 			{
@@ -292,7 +292,7 @@ void ranking_input_name(void)
 			else if (Cursor.x == 10)
 			{
 				name_num--;
-				New_Score.name[name_num] = '/0';
+				New_Score.name[name_num] = '\0';
 			}
 			else
 			{
