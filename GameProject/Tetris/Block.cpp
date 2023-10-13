@@ -49,9 +49,9 @@ const int C_BLOCK_TABLE[BLOCK_TYPE_MAX][BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = {
 		{0,0,0,0},
 	},
 	{
+		{2,2,0,0},
 		{0,0,0,0},
-		{0,0,0,0},
-		{2,2,2,2},
+		{0,0,2,2},
 		{0,0,0,0},
 	},
 	{
@@ -79,7 +79,7 @@ const int C_BLOCK_TABLE[BLOCK_TYPE_MAX][BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = {
 		{0,0,0,0},
 	},
 	{
-		{0,0,0,0},
+		{0,7,0,0},
 		{0,7,0,0},
 		{7,7,7,0},
 		{0,0,0,0},
