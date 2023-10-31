@@ -43,6 +43,7 @@ int TitleScene_Initialize(void)
 	sounds[E_TITLE_SE_CURSOR] = LoadSoundMem("sounds/SE1.mp3");
 	sounds[E_TITLE_SE_SELECT] = LoadSoundMem("sounds/SE2.mp3");
 
+	ChangeVolumeSoundMem(100, sounds[E_TITLE_BGM]);
 	ChangeVolumeSoundMem(120, sounds[E_TITLE_SE_CURSOR]);
 	ChangeVolumeSoundMem(80, sounds[E_TITLE_SE_SELECT]);
 

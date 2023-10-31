@@ -37,6 +37,8 @@ int GameMainScene_Initialize(void)
 	BackGround_sound = LoadSoundMem("sounds/BGM017.ogg");
 	GameOver_sound = LoadSoundMem("sounds/GameOver.mp3");
 
+	ChangeVolumeSoundMem(80, BackGround_sound);
+
 	//エラーチェック
 	if (BackGround_image == -1)
 	{
