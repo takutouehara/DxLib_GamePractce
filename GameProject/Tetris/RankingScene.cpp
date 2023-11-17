@@ -53,6 +53,7 @@ void ranking_input_name_draw(void);		//–¼‘O“ü—Í•`‰æˆ—
 int RankingScene_Initialize(void)
 {
 	int ret = 0;
+	int i;
 	file_read();
 
 	switch (DispMode)
@@ -61,6 +62,10 @@ int RankingScene_Initialize(void)
 			Cursor.x = 0;
 			Cursor.y = 0;
 			name_num = 0;
+			for (i = 0; i < RANKING_NAME_LEN; i++)
+			{
+				New_Score.name[i] = NULL;
+			}
 			break;
 		case RANKING_DISP_MODE:
 		default:
@@ -187,7 +192,7 @@ void file_write(void)
 	{
 		for (i = 0; i < RANKING_MAX; i++)
 		{
-			fprintf(fp, "%2d,%[^,],%10d\n", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
+			fprintf(fp, "%2d,%s,%10d\n", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
 		}
 
 		fclose(fp);
